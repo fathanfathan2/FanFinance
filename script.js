@@ -52,11 +52,22 @@ const semuaHalaman = document.querySelectorAll('.view-section');
 const judulHalaman = document.getElementById('page-title');
 
 const petaJudul = {
-    'view-beranda': 'Ringkasan Uang Saku',
-    'view-catat': 'Catat Transaksi Baru',
-    'view-riwayat': 'Data Riwayat Transaksi',
-    'view-celengan': 'Celengan Target Impian'
+    'view-beranda': ['Halo, Fathan 👋', 'Kelola keuanganmu dengan lebih baik, langkah kecil hari ini, masa depan yang lebih besar nanti.'],
+    'view-catat': ['Catat Uang', 'Tambahkan pemasukan atau pengeluaranmu hari ini.'],
+    'view-riwayat': ['Riwayat Data', 'Lihat, cari, dan saring semua transaksimu.'],
+    'view-celengan': ['Celengan', 'Kumpulkan uang untuk barang impianmu.']
 };
+
+// Ikon & warna per kategori (ikon ada di sprite SVG index.html)
+const petaKategori = {
+    'Transportasi': ['i-bus', 'cat-transport'],
+    'Makan & Jajan': ['i-food', 'cat-makan'],
+    'Uang Saku': ['i-wallet', 'cat-saku'],
+    'Keperluan Sekolah': ['i-book', 'cat-sekolah'],
+    'Kuota & Hiburan': ['i-game', 'cat-hiburan'],
+    'Lainnya': ['i-box', 'cat-lain']
+};
+function ikon(id) { return `<svg class="ic"><use href="#${id}"/></svg>`; }
 
 function pindahHalaman(idTarget) {
     // Matikan semua halaman dan tombol aktif
@@ -69,7 +80,9 @@ function pindahHalaman(idTarget) {
     if (tombolAktif) tombolAktif.classList.add('active');
 
     // Ubah judul header
-    judulHalaman.textContent = petaJudul[idTarget] || 'SakuKu';
+    const [judul, sub] = petaJudul[idTarget] || ['SakuKu', ''];
+    judulHalaman.textContent = judul;
+    document.getElementById('page-sub').textContent = sub;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -78,7 +91,9 @@ tombolNav.forEach(btn => {
 });
 
 // Tombol jalan pintas "+ Catat Cepat" & "Lihat Semua"
-document.getElementById('btn-shortcut-catat').addEventListener('click', () => pindahHalaman('view-catat'));
+document.querySelectorAll('.quick-btn').forEach(btn => {
+    btn.addEventListener('click', () => pindahHalaman(btn.dataset.target));
+});
 document.getElementById('btn-lihat-semua').addEventListener('click', () => pindahHalaman('view-riwayat'));
 
 // ============================================================================
@@ -121,18 +136,22 @@ function perbaruiTampilan() {
 
     barLimit.style.width = persentaseLimit + '%';
 
+    const pill = document.getElementById('status-pill');
+    const teksPill = document.getElementById('status-text');
+    pill.classList.remove('waspada', 'boros');
+
     if (keluarHariIni > batasHarian) {
-        barLimit.style.backgroundColor = '#ef4444'; // Merah
-        statusLimit.textContent = '⚠️ Waduh! Jajanmu hari ini sudah melewati batas harian.';
-        statusLimit.style.color = '#ef4444';
+        barLimit.style.backgroundColor = '#ef3b4b';
+        statusLimit.textContent = 'Waduh! Jajanmu hari ini sudah melewati batas harian.';
+        pill.classList.add('boros'); teksPill.textContent = 'Boros';
     } else if (persentaseLimit >= 75) {
-        barLimit.style.backgroundColor = '#f59e0b'; // Kuning
-        statusLimit.textContent = `💡 Hati-hati, sisa jatah jajan hari ini tinggal ${formatRupiah(batasHarian - keluarHariIni)}.`;
-        statusLimit.style.color = '#d97706';
+        barLimit.style.backgroundColor = '#2f6bf0';
+        statusLimit.textContent = `Hati-hati, sisa jatah jajan hari ini tinggal ${formatRupiah(batasHarian - keluarHariIni)}.`;
+        pill.classList.add('waspada'); teksPill.textContent = 'Waspada';
     } else {
-        barLimit.style.backgroundColor = '#10b981'; // Hijau
-        statusLimit.textContent = `✅ Masih aman! Sisa jatah jajan hari ini ${formatRupiah(batasHarian - keluarHariIni)}.`;
-        statusLimit.style.color = '#059669';
+        barLimit.style.backgroundColor = '#2f6bf0';
+        statusLimit.textContent = `Masih aman! Sisa jatah jajan hari ini ${formatRupiah(batasHarian - keluarHariIni)}.`;
+        teksPill.textContent = 'Aman';
     }
 
     // C. Render 3 Transaksi Terakhir di Beranda
@@ -162,12 +181,16 @@ function renderTransaksiTerakhir() {
 
         const li = document.createElement('li');
         li.className = 'recent-item';
+        const [idIkon, kelasIkon] = petaKategori[item.kategori] || petaKategori['Lainnya'];
+        li.addEventListener('click', () => pindahHalaman('view-riwayat'));
         li.innerHTML = `
-            <div>
+            <span class="cat-icon ${kelasIkon}">${ikon(idIkon)}</span>
+            <div class="recent-body">
                 <p class="recent-title">${item.keterangan}</p>
                 <span class="recent-meta">${item.tanggal} &bull; ${item.kategori}</span>
             </div>
             <strong class="${warna}">${tanda} ${formatRupiah(item.nominal)}</strong>
+            <span class="chev">${ikon('i-chev')}</span>
         `;
         listEl.appendChild(li);
     });
@@ -306,12 +329,13 @@ function renderCelengan() {
         card.className = 'card';
         card.innerHTML = `
             <div class="goal-card-head">
-                <h4>🎯 ${item.nama}</h4>
+                <span class="cat-icon cat-saku">${ikon('i-piggy')}</span>
+                <h4>${item.nama}</h4>
                 <strong>${persen}%</strong>
             </div>
             <p class="text-muted mb-1">Terkumpul <strong>${formatRupiah(item.terkumpul)}</strong> dari ${formatRupiah(item.target)}</p>
             <div class="progress-track">
-                <div class="progress-fill" style="width: ${persen}%; background-color: #4f46e5;"></div>
+                <div class="progress-fill" style="width: ${persen}%;"></div>
             </div>
             <div class="goal-actions">
                 <button type="button" class="btn-small" onclick="tambahTabungan(${item.id}, 10000)">+ Nabung Rp 10.000</button>
@@ -339,7 +363,7 @@ document.getElementById('form-celengan').addEventListener('submit', function(e) 
 
     this.reset();
     perbaruiTampilan();
-    tampilkanNotifikasi('🎯 Target tabungan baru ditambahkan!');
+    tampilkanNotifikasi('Target tabungan baru ditambahkan!');
 });
 
 // Fungsi Nabung ke Celengan

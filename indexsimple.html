@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SakuKu - Pencatat Uang Saku Simpel</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Menghubungkan file CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Pembungkus Utama Aplikasi (Sidebar + Konten) -->
+    <div class="app-container">
+
+        <!-- ============================================================== -->
+        <!-- SIDEBAR: Navigasi Samping (Otomatis jadi menu bawah di layar HP) -->
+        <!-- ============================================================== -->
+        <aside class="sidebar">
+            <!-- Identitas Aplikasi -->
+            <div class="brand">
+                <div class="brand-icon">👛</div>
+                <div class="brand-text">
+                    <h1>SakuKu</h1>
+                    <p>Catatan Siswa PPLG</p>
+                </div>
+            </div>
+
+            <!-- Menu Navigasi Antar-Halaman -->
+            <nav class="sidebar-nav" aria-label="Menu Utama">
+                <button type="button" class="nav-btn active" data-target="view-beranda">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">Beranda</span>
+                </button>
+                <button type="button" class="nav-btn" data-target="view-catat">
+                    <span class="nav-icon">➕</span>
+                    <span class="nav-label">Catat Uang</span>
+                </button>
+                <button type="button" class="nav-btn" data-target="view-riwayat">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Riwayat Data</span>
+                </button>
+                <button type="button" class="nav-btn" data-target="view-celengan">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-label">Celengan</span>
+                </button>
+            </nav>
+
+            <!-- Info Singkat di Bawah Sidebar -->
+            <div class="sidebar-footer">
+                <p>💡 Data tersimpan otomatis di perangkatmu.</p>
+            </div>
+        </aside>
+
+        <!-- ============================================================== -->
+        <!-- MAIN: Area Konten Utama yang Berganti Sesuai Menu Sidebar      -->
+        <!-- ============================================================== -->
+        <main class="main-area">
+
+            <!-- HEADER ATAS: Judul Halaman & Tanggal Hari Ini -->
+            <header class="top-header">
+                <div>
+                    <h2 id="page-title">Ringkasan Uang Saku</h2>
+                    <p id="current-date" class="text-muted">Memuat tanggal...</p>
+                </div>
+                <button type="button" class="btn-quick-add" id="btn-shortcut-catat">
+                    + Catat Cepat
+                </button>
+            </header>
+
+            <!-- ========================================================== -->
+            <!-- HALAMAN 1: BERANDA (Ringkasan & Batas Jajan Harian)        -->
+            <!-- ========================================================== -->
+            <section id="view-beranda" class="view-section active" aria-label="Halaman Beranda">
+                
+                <!-- 3 Kartu Ringkasan Saldo -->
+                <div class="summary-cards">
+                    <article class="card card-primary">
+                        <span class="card-label">Sisa Uang Saku Saat Ini</span>
+                        <h3 id="val-saldo" class="balance-big">Rp 0</h3>
+                        <span class="card-sub">Total pemasukan dikurangi pengeluaran</span>
+                    </article>
+
+                    <article class="card">
+                        <div class="metric-top">
+                            <span class="card-label">Total Pemasukan</span>
+                            <span class="icon-badge badge-in">↓ Masuk</span>
+                        </div>
+                        <h3 id="val-pemasukan" class="metric-num text-success">Rp 0</h3>
+                    </article>
+
+                    <article class="card">
+                        <div class="metric-top">
+                            <span class="card-label">Total Pengeluaran</span>
+                            <span class="icon-badge badge-out">↑ Keluar</span>
+                        </div>
+                        <h3 id="val-pengeluaran" class="metric-num text-danger">Rp 0</h3>
+                    </article>
+                </div>
+
+                <!-- Fitur Pemantau Batas Jajan Hari Ini -->
+                <article class="card limit-card">
+                    <div class="limit-header">
+                        <div>
+                            <h3>🔥 Batas Jajan Hari Ini</h3>
+                            <p class="text-muted">Jaga pengeluaran harianmu agar tidak boros</p>
+                        </div>
+                        <button type="button" id="btn-ubah-limit" class="btn-small">⚙️ Atur Batas</button>
+                    </div>
+
+                    <div class="limit-info">
+                        <span>Terpakai hari ini: <strong id="val-jajan-hari-ini">Rp 0</strong></span>
+                        <span>Batas maksimal: <strong id="val-batas-harian">Rp 25.000</strong></span>
+                    </div>
+
+                    <!-- Progress Bar Visual -->
+                    <div class="progress-track">
+                        <div id="bar-limit" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p id="status-limit" class="limit-status">Pengeluaran hari ini masih aman.</p>
+                </article>
+
+                <!-- Preview 3 Transaksi Terakhir -->
+                <article class="card">
+                    <div class="section-head">
+                        <h3>🕒 3 Catatan Terakhir</h3>
+                        <button type="button" class="btn-link" id="btn-lihat-semua">Lihat Semua &rarr;</button>
+                    </div>
+                    <ul id="list-terakhir" class="recent-list">
+                        <!-- Diisi otomatis oleh JavaScript -->
+                    </ul>
+                </article>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- HALAMAN 2: CATAT UANG (Formulir Input yang Fokus & Mudah)  -->
+            <!-- ========================================================== -->
+            <section id="view-catat" class="view-section" aria-label="Halaman Catat Transaksi">
+                <article class="card form-container">
+                    <h3>✍️ Tambah Catatan Keuangan</h3>
+                    <p class="text-muted mb-1">Pilih jenis transaksi dan isi nominalnya dengan mudah.</p>
+
+                    <form id="form-transaksi">
+                        <!-- Pilihan Jenis: Pengeluaran atau Pemasukan -->
+                        <div class="form-group">
+                            <label class="form-label">1. Pilih Jenis Transaksi</label>
+                            <div class="type-toggle">
+                                <label class="toggle-item">
+                                    <input type="radio" name="jenis" value="pengeluaran" checked>
+                                    <span class="toggle-box box-out">💸 Pengeluaran (Jajan/Beli)</span>
+                                </label>
+                                <label class="toggle-item">
+                                    <input type="radio" name="jenis" value="pemasukan">
+                                    <span class="toggle-box box-in">💰 Pemasukan (Uang Saku)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Input Nominal + Tombol Instan -->
+                        <div class="form-group">
+                            <label for="input-nominal" class="form-label">2. Berapa Nominalnya? (Rp)</label>
+                            <input type="number" id="input-nominal" class="form-input input-large" placeholder="Contoh: 10000" min="500" required>
+                            
+                            <!-- Tombol Nominal Instan agar tidak repot ketik nol -->
+                            <div class="quick-chips">
+                                <span class="chip-label">Pilih cepat:</span>
+                                <button type="button" class="chip" data-nominal="5000">Rp 5.000</button>
+                                <button type="button" class="chip" data-nominal="10000">Rp 10.000</button>
+                                <button type="button" class="chip" data-nominal="15000">Rp 15.000</button>
+                                <button type="button" class="chip" data-nominal="20000">Rp 20.000</button>
+                                <button type="button" class="chip" data-nominal="50000">Rp 50.000</button>
+                            </div>
+                        </div>
+
+                        <!-- Kategori & Tanggal -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-kategori" class="form-label">3. Kategori</label>
+                                <select id="input-kategori" class="form-input" required>
+                                    <option value="Makan & Jajan">🍜 Makan & Jajan Kantin</option>
+                                    <option value="Transportasi">🚌 Transport / Ongkos</option>
+                                    <option value="Keperluan Sekolah">📚 Tugas & Fotokopi</option>
+                                    <option value="Kuota & Hiburan">🎮 Kuota & Hiburan</option>
+                                    <option value="Uang Saku">💵 Uang Saku Orang Tua</option>
+                                    <option value="Lainnya">📦 Lainnya</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-tanggal" class="form-label">4. Tanggal</label>
+                                <input type="date" id="input-tanggal" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <!-- Keterangan -->
+                        <div class="form-group">
+                            <label for="input-keterangan" class="form-label">5. Keterangan Singkat</label>
+                            <input type="text" id="input-keterangan" class="form-input" placeholder="Contoh: Beli nasi ayam di kantin" required>
+                        </div>
+
+                        <button type="submit" class="btn-submit">✅ Simpan Catatan</button>
+                    </form>
+                </article>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- HALAMAN 3: RIWAYAT DATA (Tabel Pencarian & Filter)         -->
+            <!-- ========================================================== -->
+            <section id="view-riwayat" class="view-section" aria-label="Halaman Riwayat Data">
+                <article class="card">
+                    <div class="section-head">
+                        <div>
+                            <h3>📋 Semua Riwayat Transaksi</h3>
+                            <p class="text-muted">Cari atau saring data pemasukan dan pengeluaranmu</p>
+                        </div>
+                        <button type="button" id="btn-reset-data" class="btn-danger-outline">🗑️ Hapus Semua Data</button>
+                    </div>
+
+                    <!-- Baris Filter & Pencarian -->
+                    <div class="filter-bar">
+                        <input type="search" id="search-transaksi" class="form-input" placeholder="🔍 Ketik untuk mencari (misal: bakso, angkot)...">
+                        <select id="filter-jenis" class="form-input">
+                            <option value="semua">Semua Jenis Transaksi</option>
+                            <option value="pemasukan">Hanya Pemasukan (Masuk)</option>
+                            <option value="pengeluaran">Hanya Pengeluaran (Keluar)</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabel Data -->
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Keterangan</th>
+                                    <th>Kategori</th>
+                                    <th>Nominal</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-riwayat-body">
+                                <!-- Diisi otomatis oleh JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+            <!-- ========================================================== -->
+            <!-- HALAMAN 4: CELENGAN (Target Tabungan Impian Siswa)         -->
+            <!-- ========================================================== -->
+            <section id="view-celengan" class="view-section" aria-label="Halaman Target Tabungan">
+                
+                <!-- Form Buat Target Baru -->
+                <article class="card mb-1">
+                    <h3>🎯 Buat Target Tabungan Baru</h3>
+                    <p class="text-muted mb-1">Punya barang impian? Catat targetmu dan nabung sedikit demi sedikit!</p>
+                    
+                    <form id="form-celengan" class="goal-form">
+                        <input type="text" id="goal-nama" class="form-input" placeholder="Nama barang (misal: Headset Baru)" required>
+                        <input type="number" id="goal-target" class="form-input" placeholder="Target Harga (Rp)" min="5000" required>
+                        <button type="submit" class="btn-primary-small">+ Tambah Target</button>
+                    </form>
+                </article>
+
+                <!-- Daftar Kartu Celengan -->
+                <div id="list-celengan" class="goals-grid">
+                    <!-- Diisi otomatis oleh JavaScript -->
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="app-footer">
+                <p>&copy; 2026 <strong>SakuKu</strong> — Muhammad Fathan Ali Khalifah.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Notifikasi Pop-up (Toast) saat berhasil simpan data -->
+    <div id="toast" class="toast" aria-live="polite">Berhasil disimpan!</div>
+
+    <!-- Menghubungkan file JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
