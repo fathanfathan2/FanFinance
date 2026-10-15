@@ -1,0 +1,775 @@
+/* ==========================================================================
+   1. CSS VARIABLES (Variabel Warna & Desain agar Mudah Diubah/Konsisten)
+   ========================================================================== */
+:root {
+    /* Palet Warna Utama (Tema Modern Fintech Indigo & Emerald) */
+    --bg-main: #f1f5f9;          /* Abu-abu kebiruan lembut untuk latar belakang */
+    --bg-card: #ffffff;          /* Putih bersih untuk kartu */
+    --text-main: #0f172a;        /* Hitam keabuan tua agar nyaman di mata */
+    --text-muted: #64748b;       /* Abu-abu untuk teks pendukung */
+    
+    /* Warna Aksen & Status Keuangan */
+    --primary: #4f46e5;          /* Biru Indigo modern */
+    --primary-hover: #4338ca;
+    --success: #10b981;          /* Hijau Emerald (Pemasukan / Aman) */
+    --success-bg: #d1fae5;
+    --danger: #ef4444;           /* Merah Coral (Pengeluaran / Bahaya) */
+    --danger-bg: #fee2e2;
+    --warning: #f59e0b;          /* Kuning Amber (Peringatan Limit) */
+    
+    /* Garis tepi, Sudut melengkung, dan Bayangan (Shadow) */
+    --border-color: #e2e8f0;
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES (Pengaturan Dasar Halaman)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Memastikan padding tidak menambah lebar elemen */
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Pembungkus tengah agar tampilan rapi di layar monitor besar */
+.container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+}
+
+/* ==========================================================================
+   3. HEADER & NAVBAR (Navigasi Atas Sticky)
+   ========================================================================== */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px); /* Efek kaca buram kekinian (Glassmorphism) */
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0.85rem 0;
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--primary), #818cf8);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-main);
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.period-badge {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background-color: #f8fafc;
+    padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #e0e7ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.user-status {
+    font-size: 0.68rem;
+    color: var(--success);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   4. KARTU RINGKASAN SALDO (Top Summary Grid)
+   ========================================================================== */
+.main-content {
+    padding-top: 1.75rem;
+    padding-bottom: 3rem;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Desain Khusus Kartu Saldo Utama dengan Gradasi Warna */
+.card-balance {
+    background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 12px 24px -6px rgba(67, 56, 202, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-label {
+    font-size: 0.82rem;
+    opacity: 0.85;
+    font-weight: 500;
+}
+
+.badge-live {
+    background-color: rgba(16, 185, 129, 0.25);
+    color: #6ee7b7;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    border: 1px solid rgba(110, 231, 183, 0.3);
+}
+
+.balance-amount {
+    font-size: 1.85rem;
+    font-weight: 800;
+    margin: 0.6rem 0;
+    letter-spacing: -0.5px;
+}
+
+.balance-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-sm);
+}
+
+/* Kartu Metrik Pendamping (Pemasukan, Pengeluaran, Tabungan) */
+.metric-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.icon-income { background-color: var(--success-bg); color: var(--success); }
+.icon-expense { background-color: var(--danger-bg); color: var(--danger); }
+.icon-saving { background-color: #e0e7ff; color: var(--primary); }
+
+.metric-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.metric-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin: 0.15rem 0;
+}
+
+.metric-note {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.text-success { color: var(--success); }
+.text-danger { color: var(--danger); }
+.text-primary { color: var(--primary); }
+
+/* ==========================================================================
+   5. DASHBOARD LAYOUT (2 Kolom: Kiri Sidebar, Kanan Konten Utama)
+   ========================================================================== */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.sidebar-column,
+.main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.85rem;
+}
+
+.section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   6. FITUR LIMIT HARIAN & WISHLIST (Progress Bars)
+   ========================================================================== */
+.status-pill {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
+    border-radius: 99px;
+}
+
+.status-safe {
+    background-color: var(--success-bg);
+    color: #047857;
+}
+
+.budget-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.85rem;
+}
+
+.budget-numbers {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    margin-bottom: 0.45rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+}
+
+.fill-warning { background: linear-gradient(90deg, var(--success), var(--warning)); }
+.fill-primary { background-color: var(--primary); }
+.fill-success { background-color: var(--success); }
+
+.budget-tip {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background-color: #f8fafc;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    margin-top: 0.6rem;
+}
+
+/* Styling Wishlist Tabungan */
+.goal-item {
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    border-top: 1px dashed var(--border-color);
+}
+
+.goal-item:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.goal-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.goal-percent { color: var(--primary); font-weight: 700; }
+.goal-sub { font-size: 0.73rem; color: var(--text-muted); }
+
+/* ==========================================================================
+   7. FORMULIR PENCATATAN TRANSAKSI
+   ========================================================================== */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text-main);
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.88rem;
+    color: var(--text-main);
+    background-color: #f8fafc;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+/* Radio Button Kustom untuk Pilih Pemasukan / Pengeluaran */
+.type-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.type-option input[type="radio"] {
+    display: none; /* Sembunyikan bulatan radio bawaan */
+}
+
+.type-box {
+    display: block;
+    text-align: center;
+    padding: 0.6rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #f8fafc;
+    transition: all 0.2s;
+}
+
+/* Efek saat Radio Pengeluaran dipilih */
+.type-option input[value="pengeluaran"]:checked + .expense-box {
+    background-color: var(--danger-bg);
+    border-color: var(--danger);
+    color: #b91c1c;
+}
+
+/* Efek saat Radio Pemasukan dipilih */
+.type-option input[value="pemasukan"]:checked + .income-box {
+    background-color: var(--success-bg);
+    border-color: var(--success);
+    color: #047857;
+}
+
+/* Tombol Nominal Cepat (Quick Chips) */
+.quick-amounts {
+    display: flex;
+     flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.chip-btn {
+    background-color: #f1f5f9;
+    border: 1px solid var(--border-color);
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.chip-btn:hover {
+    background-color: #e0e7ff;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-primary {
+    width: 100%;
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 0.25rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-primary:active {
+    transform: scale(0.99);
+}
+
+/* ==========================================================================
+   8. ANALISIS PENGELUARAN (Stacked Bar & Legenda Kategori)
+   ========================================================================== */
+.stacked-bar {
+    height: 16px;
+    width: 100%;
+    background-color: #f1f5f9;
+    border-radius: 99px;
+    overflow: hidden;
+    display: flex;
+    gap: 3px;
+    margin: 1rem 0 1.25rem;
+}
+
+.bar-segment {
+    height: 100%;
+    transition: opacity 0.2s;
+}
+
+.bar-segment:hover { opacity: 0.85; }
+
+.seg-food { background-color: #f97316; }      /* Oranye */
+.seg-transport { background-color: #3b82f6; } /* Biru */
+.seg-school { background-color: #8b5cf6; }    /* Ungu */
+.seg-other { background-color: #06b6d4; }     /* Cyan */
+
+.category-legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    background-color: #f8fafc;
+    padding: 0.65rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 0.28rem;
+    flex-shrink: 0;
+}
+
+.legend-name {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.legend-val {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* ==========================================================================
+   9. TABEL RIWAYAT TRANSAKSI & FILTER PENCARIAN
+   ========================================================================== */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    background-color: #f8fafc;
+    border-color: var(--text-muted);
+}
+
+.filter-bar {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.search-input,
+.filter-select {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.83rem;
+    background-color: #f8fafc;
+}
+
+.table-responsive {
+    overflow-x: auto; /* Membuat tabel bisa digeser di layar kecil */
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+.transaction-table th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.transaction-table td {
+    padding: 0.95rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.transaction-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.sub-text {
+    display: block;
+    font-size: 0.73rem;
+    color: var(--text-muted);
+}
+
+/* Badge Kategori di Dalam Tabel */
+.cat-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.73rem;
+    font-weight: 700;
+}
+
+.cat-food { background-color: #ffedd5; color: #c2410c; }
+.cat-transport { background-color: #dbeafe; color: #1d4ed8; }
+.cat-income { background-color: #d1fae5; color: #047857; }
+.cat-school { background-color: #ede9fe; color: #6d28d9; }
+.cat-saving { background-color: #e0e7ff; color: #4338ca; }
+
+.wallet-tag {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.amount-expense { color: var(--danger); font-weight: 700; }
+.amount-income { color: var(--success); font-weight: 700; }
+.amount-saving { color: var(--primary); font-weight: 700; }
+
+.btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.3rem;
+    border-radius: var(--radius-sm);
+    opacity: 0.6;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    background-color: var(--danger-bg);
+}
+
+/* ==========================================================================
+   10. FOOTER
+   ========================================================================== */
+.footer {
+    border-top: 1px solid var(--border-color);
+    background-color: #ffffff;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   11. MEDIA QUERIES (Tampilan Responsif untuk Tablet & Smartphone)
+   ========================================================================== */
+
+/* Layar Tablet (Maksimal Lebar 1024px) */
+@media (max-width: 1024px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr); /* Dari 4 kolom menjadi 2x2 */
+    }
+
+    .dashboard-layout {
+        grid-template-columns: 1fr; /* Sidebar dan konten utama berjejer ke bawah */
+    }
+
+    .category-legend {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Layar HP / Smartphone (Maksimal Lebar 640px) */
+@media (max-width: 640px) {
+    .period-badge {
+        display: none; /* Sembunyikan badge periode di layar HP agar navbar tidak sempit */
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr; /* Semua kartu saldo menumpuk 1 kolom */
+    }
+
+    .form-row {
+        grid-template-columns: 1fr; /* Input form berjejer ke bawah */
+    }
+
+    .filter-bar {
+        grid-template-columns: 1fr; /* Bar pencarian & filter menumpuk rapi */
+    }
+
+    .history-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+}
