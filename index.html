@@ -2,266 +2,339 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SakuKu - Catatan Siswa PPLG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b1b4d">
+    <title>SakuKu - Catatan Keuangan Siswa PPLG</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232563eb'/%3E%3Ccircle cx='16' cy='16' r='6' fill='white'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-view="beranda">
 
-<!-- Kumpulan ikon SVG (dipakai ulang lewat <use>) -->
+<!-- ===================== SPRITE IKON & ILUSTRASI (dipakai ulang lewat <use>) ===================== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V6a2 2 0 0 0-2-2H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-3 7.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5 6h12v1H5a1 1 0 0 1 0-1z"/></symbol>
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"/></symbol>
-    <symbol id="i-cal" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14zM7 11h4v2H7zm0 4h7v2H7z"/></symbol>
-    <symbol id="i-piggy" viewBox="0 0 24 24"><path d="M19 8.5c-.6-1-1.4-1.7-2.4-2.2L17 4l-2.5.8A9 9 0 0 0 13 4.5C8.6 4.5 5 7 5 10.5c0 .4 0 .7.1 1H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h1.5c.5 1 1.3 1.800 2.300 2.400V20h3v-1.200c.6.100 1.200.200 1.700.200s1.100-.1 1.700-.2V20h3v-3.100c1.200-.8 2-1.800 2.200-3H21v-4zM15.500 10a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></symbol>
-    <symbol id="i-bus" viewBox="0 0 24 24"><path d="M4 16c0 .9.4 1.700 1 2.200V20a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h8v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1.800c.6-.5 1-1.300 1-2.200V6c0-3.500-3.600-4-8-4S4 2.500 4 6zm3.500 1a1.500 1.500 0 1 1 0-3 1.500 1.500 0 0 1 0 3zm9 0a1.500 1.500 0 1 1 0-3 1.500 1.500 0 0 1 0 3zM18 11H6V6h12z"/></symbol>
-    <symbol id="i-food" viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.100 1.600 3.800 3.600 4V22h2.800v-9c2-.2 3.600-1.900 3.600-4V2h-2zm5-3v8h2.500v8H21V2c-2.800 0-5 2.200-5 4z"/></symbol>
-    <symbol id="i-book" viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM9 4h2v5l-1-.75L9 9z"/></symbol>
-    <symbol id="i-game" viewBox="0 0 24 24"><path d="M21 6H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-10 7H9v2H7v-2H5v-2h2V9h2v2h2zm4.500 2a1.500 1.500 0 1 1 0-3 1.500 1.500 0 0 1 0 3zm3-3a1.500 1.500 0 1 1 0-3 1.500 1.500 0 0 1 0 3z"/></symbol>
-    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 7.500 12 2 3 7.500v9L12 22l9-5.500zM12 4.300l5.700 3.500L12 11.300 6.300 7.800zM5 9.500l6 3.700v6.600l-6-3.700zm8 10.300v-6.600l6-3.700v6.600z"/></symbol>
-    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18v2H3zM4 9l5 5 4-4 7 6V6l-3 2-4-4-4 5z"/></symbol>
-    <symbol id="i-bars" viewBox="0 0 24 24"><path d="M4 13h4v8H4zm6-6h4v14h-4zm6 3h4v11h-4z"/></symbol>
-    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm1-13h-2v6l5 3 1-1.700-4-2.300z"/></symbol>
-    <symbol id="i-target" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10h-2a8 8 0 1 1-8-8zm0 4a6 6 0 1 0 6 6h-2a4 4 0 1 1-4-4zm0 4a2 2 0 1 0 2 2l7.500-7.500V2h-2.500l-1 1-.5-.5-1.500 1.500.5.500L12 10z"/></symbol>
-    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M19.400 13a7.500 7.500 0 0 0 0-2l2.100-1.600-2-3.500-2.500 1a7.700 7.700 0 0 0-1.700-1L15 3.200h-4l-.4 2.700c-.6.300-1.200.600-1.700 1l-2.500-1-2 3.500L6.600 11a7.500 7.500 0 0 0 0 2l-2.100 1.600 2 3.500 2.500-1c.5.400 1.100.700 1.700 1l.4 2.700h4l.4-2.700c.6-.3 1.200-.600 1.700-1l2.500 1 2-3.500zM12 15.500a3.500 3.500 0 1 1 0-7 3.500 3.500 0 0 1 0 7z"/></symbol>
-    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 14-5-5h3V7h4v4h3z"/></symbol>
-    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 4 5 11h4v6h6v-6h4z"/></symbol>
-    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 21h6v-1H9zm3-19a7 7 0 0 0-4 12.700V17h8v-2.300A7 7 0 0 0 12 2z"/></symbol>
-    <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/></symbol>
-    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8.600 5.600 15 12l-6.400 6.400L10 20l8-8-8-8z"/></symbol>
+    <!-- Ikon garis -->
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-plus-s" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M8 2v4M16 2v4M3 10h18M8 14h3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-piggy" viewBox="0 0 24 24"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z"/><path d="M2 9v1c0 1.1.9 2 2 2h1"/><path d="M16 11h.01"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-chev-d" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+    <symbol id="i-food" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></symbol>
+    <symbol id="i-bus" viewBox="0 0 24 24"><path d="M8 6v6M15 6v6M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
+    <symbol id="i-grad" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M22 10v6"/></symbol>
+    <symbol id="i-health" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"/><path d="M17.3 5H6.7a4 4 0 0 0-3.9 3.2l-1.4 6.5A3 3 0 0 0 4.3 18.500c.9 0 1.700-.5 2.100-1.200L7.500 15h9l1.100 2.300c.4.700 1.200 1.200 2.100 1.200a3 3 0 0 0 2.900-3.800l-1.400-6.500A4 4 0 0 0 17.300 5z"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="3"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.700c.700.600 1 1.300 1 2.300h6c0-1 .3-1.700 1-2.300A7 7 0 0 0 12 2z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+    <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.500"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24"><path d="M5 21v-8M12 21V4M19 21V9"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.500 8 8 9 4.500-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.500 3.500a2.100 2.100 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 22c4 0 7-2.700 7-7 0-3-2-5-3-7-1.500 1.500-2 3-2 3 0-4-2-7-5-9 0 4-4 6-4 12 0 4.300 3 8 7 8z"/></symbol>
+
+    <!-- Ilustrasi -->
+    <symbol id="art-leaf" viewBox="0 0 80 120"><path d="M40 118C34 80 38 40 56 4c10 40 4 84-16 114z" fill="#3fae7a"/><path d="M40 118C30 90 14 70 2 62c18 4 34 18 38 56z" fill="#2d8f66"/></symbol>
+    <symbol id="art-wallet" viewBox="0 0 220 160">
+        <path d="M196 150c-6-34 2-62 20-80-2 30-8 56-20 80z" fill="#3fae7a" opacity=".85"/>
+        <path d="M176 150c-12-26-10-50 2-68 4 26 2 48-2 68z" fill="#2d8f66" opacity=".85"/>
+        <circle cx="128" cy="38" r="24" fill="#f6b73c"/><circle cx="128" cy="38" r="16" fill="#ffd56b"/><path d="M128 28v20M122 38h12" stroke="#f6b73c" stroke-width="3" stroke-linecap="round"/>
+        <g transform="rotate(-8 90 100)">
+            <rect x="20" y="52" width="140" height="92" rx="22" fill="#4f8dff"/>
+            <rect x="20" y="52" width="140" height="92" rx="22" fill="none" stroke="#8db6ff" stroke-width="3"/>
+            <rect x="112" y="84" width="54" height="36" rx="15" fill="#2f66dd"/>
+            <circle cx="132" cy="102" r="5.500" fill="#fff"/>
+        </g>
+    </symbol>
+    <symbol id="art-piggy" viewBox="0 0 220 175">
+        <ellipse cx="108" cy="164" rx="72" ry="8" fill="#000" opacity=".14"/>
+        <circle cx="112" cy="28" r="21" fill="#f6b73c"/><circle cx="112" cy="28" r="14" fill="#ffd56b"/><path d="M112 20v16M107 28h10" stroke="#f6b73c" stroke-width="3" stroke-linecap="round"/>
+        <path d="M70 66 80 38l22 22z" fill="#a9bff6"/>
+        <ellipse cx="108" cy="108" rx="70" ry="54" fill="#c6d6fc"/>
+        <ellipse cx="108" cy="108" rx="70" ry="54" fill="none" stroke="#e1eaff" stroke-width="3"/>
+        <rect x="86" y="56" width="46" height="7" rx="3.500" fill="#8fa9ea"/>
+        <rect x="66" y="146" width="24" height="20" rx="8" fill="#a9bff6"/><rect x="126" y="146" width="24" height="20" rx="8" fill="#a9bff6"/>
+        <ellipse cx="172" cy="114" rx="21" ry="17" fill="#a9bff6"/><circle cx="166" cy="114" r="2.800" fill="#6b8be0"/><circle cx="178" cy="114" r="2.800" fill="#6b8be0"/>
+        <circle cx="148" cy="94" r="5" fill="#1e3a8a"/>
+        <path d="M40 104q-18-4-10-22" stroke="#a9bff6" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M58 92q10-22 38-26" stroke="#fff" opacity=".65" stroke-width="5" fill="none" stroke-linecap="round"/>
+    </symbol>
 </svg>
 
-<div class="app-container">
+<div class="app">
 
-    <!-- SIDEBAR -->
+    <!-- ===================== SIDEBAR (tablet & desktop) ===================== -->
     <aside class="sidebar">
-        <div class="brand">
-            <div class="brand-icon"><svg class="ic"><use href="#i-wallet"/></svg></div>
-            <div class="brand-text">
-                <h1>Saku<span>Ku</span></h1>
-                <p>Catatan Siswa PPLG</p>
-            </div>
-        </div>
-        <nav class="sidebar-nav" aria-label="Menu Utama">
-            <button type="button" class="nav-btn active" data-target="view-beranda"><svg class="ic"><use href="#i-home"/></svg><span>Beranda</span></button>
-            <button type="button" class="nav-btn" data-target="view-catat"><svg class="ic"><use href="#i-plus"/></svg><span>Catat Uang</span></button>
-            <button type="button" class="nav-btn" data-target="view-riwayat"><svg class="ic"><use href="#i-cal"/></svg><span>Riwayat Data</span></button>
-            <button type="button" class="nav-btn" data-target="view-celengan"><svg class="ic"><use href="#i-piggy"/></svg><span>Celengan</span></button>
+        <a class="brand" href="#beranda" aria-label="SakuKu - ke Beranda">
+            <span class="brand-icon"><svg class="ic"><use href="#i-wallet"/></svg></span>
+            <span class="brand-name">Saku<span>Ku</span></span>
+        </a>
+        <nav class="side-nav" aria-label="Menu utama">
+            <a class="nav-link" href="#beranda" data-view="beranda"><svg class="ic"><use href="#i-home"/></svg><span>Beranda</span></a>
+            <a class="nav-link" href="#catat" data-view="catat"><svg class="ic"><use href="#i-plus"/></svg><span>Catat Uang</span></a>
+            <a class="nav-link" href="#riwayat" data-view="riwayat"><svg class="ic"><use href="#i-cal"/></svg><span>Riwayat Data</span></a>
+            <a class="nav-link" href="#celengan" data-view="celengan"><svg class="ic"><use href="#i-piggy"/></svg><span>Celengan</span></a>
         </nav>
-        <div class="sidebar-footer">
-            <svg class="ic"><use href="#i-bulb"/></svg>
-            <p>Data tersimpan otomatis di perangkatmu.</p>
+        <div class="side-quote">
+            <p><span class="qm">“</span>Kelola keuangan dengan bijak, raih masa depan lebih baik.</p>
+            <svg class="leaf" aria-hidden="true"><use href="#art-leaf"/></svg>
         </div>
     </aside>
 
-    <main class="main-area">
-
-        <!-- HEADER -->
-        <header class="top-header">
-            <div>
-                <h2 id="page-title">Halo, Fathan 👋</h2>
-                <p id="page-sub" class="page-sub">Kelola keuanganmu dengan lebih baik, langkah kecil hari ini, masa depan yang lebih besar nanti.</p>
+    <div class="main">
+        <!-- ===================== HEADER ===================== -->
+        <header class="topbar">
+            <button type="button" id="btn-back" class="icon-btn ghost back-btn" aria-label="Kembali ke Beranda"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+            <div class="titles">
+                <h1 id="page-title">Halo, Fathan 👋</h1>
+                <p id="page-sub">Semoga hari ini penuh hal baik dan saldo makin bertambah!</p>
             </div>
             <div class="top-actions">
-                <div class="date-chip"><svg class="ic"><use href="#i-cal"/></svg><span id="current-date">Memuat tanggal...</span></div>
-                <div class="user-chip"><span class="avatar"><svg class="ic"><use href="#i-user"/></svg></span>Fathan</div>
+                <div class="date-card" aria-label="Tanggal hari ini">
+                    <span class="date-ic"><svg class="ic"><use href="#i-cal"/></svg></span>
+                    <div><small id="date-day">Hari,</small><b id="date-full">Memuat...</b></div>
+                </div>
+                <div class="pop-wrap">
+                    <button type="button" id="btn-bell" class="icon-btn ghost" aria-label="Notifikasi" aria-expanded="false" aria-controls="notif-pop">
+                        <svg class="ic"><use href="#i-bell"/></svg><span class="dot" id="bell-dot" hidden></span>
+                    </button>
+                    <div id="notif-pop" class="popover" hidden></div>
+                </div>
+                <button type="button" id="btn-user" class="user-chip" aria-label="Ubah nama">
+                    <span class="avatar"><svg class="ic"><use href="#i-user"/></svg></span>
+                    <span id="user-name">Fathan</span>
+                    <svg class="ic chev"><use href="#i-chev-d"/></svg>
+                </button>
             </div>
         </header>
 
-        <!-- ================= BERANDA ================= -->
-        <section id="view-beranda" class="view-section active" aria-label="Beranda">
-            <div class="home-grid summary-cards">
-                <article class="card card-primary">
-                    <div class="balance-head">
-                        <div class="balance-title"><span class="mini-icon"><svg class="ic"><use href="#i-wallet"/></svg></span>Sisa Uang Saku Saat Ini</div>
-                        <span id="status-pill" class="status-pill"><svg class="ic"><use href="#i-bars"/></svg><span id="status-text">Aman</span></span>
-                    </div>
-                    <h3 id="val-saldo" class="balance-big">Rp 0</h3>
-                    <span class="card-sub">Total pemasukan dikurangi pengeluaran</span>
-                    <svg class="wallet-art" viewBox="0 0 200 150" aria-hidden="true">
-                        <circle cx="120" cy="40" r="24" fill="#f6b73c"/><circle cx="120" cy="40" r="16" fill="#ffd56b"/>
-                        <rect x="14" y="52" width="140" height="88" rx="22" fill="#3b78f2" transform="rotate(-8 84 96)"/>
-                        <rect x="14" y="52" width="140" height="88" rx="22" fill="none" stroke="#6ea0ff" stroke-width="3" transform="rotate(-8 84 96)"/>
-                        <rect x="108" y="82" width="52" height="34" rx="14" fill="#2f66dd" transform="rotate(-8 134 99)"/>
-                        <circle cx="128" cy="98" r="5" fill="#fff"/>
-                        <path d="M168 24l8-9M176 44l14-2M160 10l2-10" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
-                </article>
+        <main class="content">
 
-                <article class="card metric-card">
-                    <div>
-                        <div class="metric-top"><span class="metric-icon in"><svg class="ic"><use href="#i-down"/></svg></span><span class="metric-name">Total Pemasukan</span><span class="icon-badge badge-in">↑ Masuk</span></div>
-                        <h3 id="val-pemasukan" class="metric-num text-success">Rp 0</h3>
-                    </div>
-                    <svg class="spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true">
-                        <defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17a34a" stop-opacity=".28"/><stop offset="1" stop-color="#17a34a" stop-opacity="0"/></linearGradient></defs>
-                        <path d="M0 58 C30 40 50 30 80 40 S130 62 160 48 S220 36 250 24 L300 10 V70 H0Z" fill="url(#gg)"/>
-                        <path d="M0 58 C30 40 50 30 80 40 S130 62 160 48 S220 36 250 24 L300 10" fill="none" stroke="#3ccf7a" stroke-width="2.5" stroke-linecap="round"/>
-                    </svg>
-                </article>
-
-                <article class="card metric-card">
-                    <div>
-                        <div class="metric-top"><span class="metric-icon out"><svg class="ic"><use href="#i-up"/></svg></span><span class="metric-name">Total Pengeluaran</span><span class="icon-badge badge-out">↑ Keluar</span></div>
-                        <h3 id="val-pengeluaran" class="metric-num text-danger">Rp 0</h3>
-                    </div>
-                    <svg class="spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true">
-                        <defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef3b4b" stop-opacity=".25"/><stop offset="1" stop-color="#ef3b4b" stop-opacity="0"/></linearGradient></defs>
-                        <path d="M0 60 C30 56 50 28 90 30 S150 58 190 52 S250 40 270 30 L300 14 V70 H0Z" fill="url(#rg)"/>
-                        <path d="M0 60 C30 56 50 28 90 30 S150 58 190 52 S250 40 270 30 L300 14" fill="none" stroke="#ff7a85" stroke-width="2.5" stroke-linecap="round"/>
-                    </svg>
-                </article>
-            </div>
-
-            <div class="home-lower">
-                <div class="home-left">
-                    <article class="card limit-card">
-                        <div class="limit-header">
-                            <div class="limit-title">
-                                <span class="round-icon"><svg class="ic"><use href="#i-target"/></svg></span>
-                                <div><h3>Batas Jajan Hari Ini</h3><p class="text-muted">Jaga pengeluaran harianmu agar tidak boros.</p></div>
+            <!-- ===================== BERANDA ===================== -->
+            <section id="view-beranda" class="view" aria-label="Beranda">
+                <div class="home">
+                    <div class="home-main">
+                        <article class="balance-card">
+                            <div class="bc-top">
+                                <span>Total Saldo</span>
+                                <button type="button" id="btn-eye" class="eye" aria-label="Sembunyikan saldo" aria-pressed="false"><svg class="ic"><use id="eye-use" href="#i-eye"/></svg></button>
                             </div>
-                            <button type="button" id="btn-ubah-limit" class="btn-small"><svg class="ic"><use href="#i-gear"/></svg>Atur Batas</button>
+                            <h2 id="val-saldo" class="bc-amount">Rp 0</h2>
+                            <p class="bc-sub">Total pemasukan dikurangi pengeluaran</p>
+                            <a class="btn-pill" href="#riwayat">Lihat Detail <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+                            <svg class="bc-art" aria-hidden="true"><use href="#art-wallet"/></svg>
+                        </article>
+
+                        <div>
+                            <h3 class="sec-title">Ringkasan Keuangan</h3>
+                            <div class="sum-grid">
+                                <article class="sum-card in">
+                                    <span class="sum-ic"><svg class="ic"><use href="#i-up"/></svg></span>
+                                    <div><small>Total Pemasukan</small><b id="val-pemasukan">Rp 0</b></div>
+                                </article>
+                                <article class="sum-card out">
+                                    <span class="sum-ic"><svg class="ic"><use href="#i-down"/></svg></span>
+                                    <div><small>Total Pengeluaran</small><b id="val-pengeluaran">Rp 0</b></div>
+                                </article>
+                            </div>
                         </div>
-                        <div class="limit-box">
+
+                        <article class="card limit-card" id="limit-card" data-status="aman">
+                            <div class="card-head">
+                                <div class="head-title">
+                                    <span class="round-ic"><svg class="ic"><use href="#i-target"/></svg></span>
+                                    <div><h3>Batas Jajan Hari Ini</h3><p class="muted">Jaga pengeluaran harianmu agar tidak boros.</p></div>
+                                </div>
+                                <span id="status-pill" class="status-pill"><span id="status-text">Aman</span></span>
+                            </div>
                             <div class="limit-info">
-                                <span>Terpakai hari ini: <strong id="val-jajan-hari-ini">Rp 0</strong></span>
-                                <span>Batas maksimal: <strong id="val-batas-harian">Rp 25.000</strong></span>
+                                <span>Terpakai: <strong id="val-jajan-hari-ini">Rp 0</strong></span>
+                                <span>Batas: <strong id="val-batas-harian">Rp 25.000</strong></span>
                             </div>
-                            <div class="progress-track"><div id="bar-limit" class="progress-fill" style="width:0%"></div></div>
-                            <p class="limit-status"><svg class="ic"><use href="#i-bulb"/></svg><span id="status-limit">Pengeluaran hari ini masih aman.</span></p>
-                        </div>
-                    </article>
+                            <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar-limit-wrap"><i id="bar-limit" style="width:0%"></i></div>
+                            <div class="limit-foot">
+                                <p class="limit-status"><svg class="ic"><use href="#i-bulb"/></svg><span id="status-limit">Pengeluaran hari ini masih aman.</span></p>
+                                <button type="button" id="btn-ubah-limit" class="btn-small"><svg class="ic"><use href="#i-edit"/></svg>Atur Batas</button>
+                            </div>
+                        </article>
 
-                    <article class="card">
-                        <div class="section-head">
-                            <h3 class="section-title"><svg class="ic"><use href="#i-clock"/></svg>3 Catatan Terakhir</h3>
-                            <button type="button" class="btn-link" id="btn-lihat-semua">Lihat Semua →</button>
+                        <article class="card chart-card">
+                            <div class="card-head">
+                                <h3>Grafik Mingguan</h3>
+                                <div class="legend"><span class="lg in">Pemasukan</span><span class="lg out">Pengeluaran</span></div>
+                            </div>
+                            <div id="grafik" class="chart"></div>
+                        </article>
+                    </div>
+
+                    <div class="home-side">
+                        <article class="card">
+                            <div class="card-head">
+                                <h3>3 Catatan Terakhir</h3>
+                                <a class="link" href="#riwayat">Lihat Semua</a>
+                            </div>
+                            <ul id="list-terakhir" class="tx-list compact"></ul>
+                        </article>
+                        <div class="side-col">
+                            <div>
+                                <h3 class="sec-title">Menu Cepat</h3>
+                                <div class="quick-grid">
+                                    <a class="quick-btn" href="#catat"><span class="q-ic c-transport"><svg class="ic"><use href="#i-plus"/></svg></span><b>Catat Uang</b><small>Tambah transaksi</small></a>
+                                    <a class="quick-btn" href="#riwayat"><span class="q-ic c-pendidikan"><svg class="ic"><use href="#i-cal"/></svg></span><b>Riwayat</b><small>Semua transaksi</small></a>
+                                    <a class="quick-btn" href="#celengan"><span class="q-ic c-saku"><svg class="ic"><use href="#i-piggy"/></svg></span><b>Celengan</b><small>Atur tabungan</small></a>
+                                    <button type="button" class="quick-btn" id="btn-ekspor-cepat"><span class="q-ic c-hiburan"><svg class="ic"><use href="#i-download"/></svg></span><b>Ekspor</b><small>Simpan ke CSV</small></button>
+                                </div>
+                            </div>
+                            <button type="button" class="tips" id="tips-card" aria-label="Tips berikutnya">
+                                <span class="tips-ic"><svg class="ic"><use href="#i-bulb"/></svg></span>
+                                <span class="tips-body"><b>Tips hari ini</b><span id="tips-text">Jangan lupa catat pengeluaran kecil, ya!</span></span>
+                                <svg class="ic chev"><use href="#i-chev"/></svg>
+                            </button>
                         </div>
-                        <ul id="list-terakhir" class="recent-list"></ul>
-                    </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== CATAT UANG ===================== -->
+            <section id="view-catat" class="view" aria-label="Catat Uang">
+                <form id="form-transaksi" class="catat" novalidate>
+                    <div class="catat-left">
+                        <div class="seg" role="radiogroup" aria-label="Jenis transaksi">
+                            <label><input type="radio" name="jenis" value="pengeluaran" checked><span class="seg-item"><span class="seg-ic out"><svg class="ic"><use href="#i-down"/></svg></span>Pengeluaran</span></label>
+                            <label><input type="radio" name="jenis" value="pemasukan"><span class="seg-item"><span class="seg-ic in"><svg class="ic"><use href="#i-up"/></svg></span>Pemasukan</span></label>
+                        </div>
+
+                        <div class="card">
+                            <label class="lbl" for="input-nominal">Nominal</label>
+                            <div class="money big">
+                                <span class="rp">Rp</span>
+                                <input type="text" id="input-nominal" inputmode="numeric" autocomplete="off" placeholder="0" aria-describedby="err-form">
+                                <span class="calc" aria-hidden="true"><svg class="ic"><use href="#i-calc"/></svg></span>
+                            </div>
+                            <div class="chips" aria-label="Pilih nominal cepat">
+                                <button type="button" class="chip" data-nominal="5000">5.000</button>
+                                <button type="button" class="chip" data-nominal="10000">10.000</button>
+                                <button type="button" class="chip" data-nominal="15000">15.000</button>
+                                <button type="button" class="chip" data-nominal="20000">20.000</button>
+                                <button type="button" class="chip" data-nominal="50000">50.000</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">Kategori</h3>
+                            <div id="cat-grid" class="cat-grid" role="radiogroup" aria-label="Kategori"></div>
+                        </div>
+                    </div>
+
+                    <div class="catat-right">
+                        <div class="card">
+                            <div class="field-group">
+                                <label class="lbl" for="input-tanggal">Tanggal</label>
+                                <div class="field"><svg class="ic"><use href="#i-cal"/></svg><input type="date" id="input-tanggal" required></div>
+                            </div>
+                            <div class="field-group">
+                                <label class="lbl" for="input-keterangan">Catatan <span class="opt">(opsional)</span></label>
+                                <div class="field"><svg class="ic"><use href="#i-note"/></svg><input type="text" id="input-keterangan" maxlength="60" placeholder="Contoh: beli nasi ayam" autocomplete="off"></div>
+                            </div>
+                            <p class="preview" id="preview-saldo">Saldo sekarang <b>Rp 0</b></p>
+                        </div>
+                        <p id="err-form" class="err" role="alert" hidden></p>
+                        <button type="submit" class="btn-primary block">Simpan</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- ===================== RIWAYAT DATA ===================== -->
+            <section id="view-riwayat" class="view" aria-label="Riwayat Data">
+                <article class="total-card">
+                    <span class="tc-ic"><svg class="ic"><use href="#i-bars"/></svg></span>
+                    <div class="tc-text"><b>Total Transaksi</b><small id="rw-range">Belum ada data</small></div>
+                    <strong id="rw-total">Rp 0</strong>
+                </article>
+
+                <div class="search-row">
+                    <label class="search">
+                        <svg class="ic"><use href="#i-search"/></svg>
+                        <input type="search" id="search-transaksi" placeholder="Cari transaksi..." autocomplete="off" aria-label="Cari transaksi">
+                    </label>
+                    <button type="button" id="btn-filter" class="icon-btn sq" aria-label="Filter lanjutan" aria-expanded="false" aria-controls="filter-panel"><svg class="ic"><use href="#i-sliders"/></svg></button>
                 </div>
 
-                <aside class="home-right">
-                    <div class="quote-banner">
-                        <p>Kelola keuanganmu hari ini, untuk tujuan besar esok hari.</p>
-                        <small>– SakuKu</small>
-                        <svg viewBox="0 0 220 170" aria-hidden="true">
-                            <ellipse cx="40" cy="150" rx="60" ry="26" fill="#bcd5f5"/>
-                            <path d="M60 170 L140 40 L215 170Z" fill="#6f8fd6"/><path d="M140 40 L118 78 L135 70 L145 84 L158 68 L170 80Z" fill="#fff"/>
-                            <path d="M110 170 L170 90 L230 170Z" fill="#7bc79a"/><path d="M165 170 L215 120 L240 170Z" fill="#4faa78"/>
-                            <path d="M140 40V14" stroke="#2f5fd0" stroke-width="3"/><path d="M140 14h22l-6 7 6 7h-22z" fill="#2f6bf0"/>
-                        </svg>
-                    </div>
-                    <h4 class="quick-title">Menu Cepat</h4>
-                    <div class="quick-grid">
-                        <button type="button" class="quick-btn" data-target="view-catat"><span class="cat-icon cat-transport"><svg class="ic"><use href="#i-plus"/></svg></span><b>Catat Uang</b><span>Tambah transaksi</span></button>
-                        <button type="button" class="quick-btn" data-target="view-riwayat"><span class="cat-icon cat-sekolah"><svg class="ic"><use href="#i-cal"/></svg></span><b>Riwayat Data</b><span>Lihat semua transaksi</span></button>
-                        <button type="button" class="quick-btn" data-target="view-celengan"><span class="cat-icon cat-saku"><svg class="ic"><use href="#i-piggy"/></svg></span><b>Celengan</b><span>Atur tabungan</span></button>
-                        <button type="button" class="quick-btn" data-target="view-riwayat"><span class="cat-icon cat-transport"><svg class="ic"><use href="#i-chart"/></svg></span><b>Laporan</b><span>Lihat ringkasan</span></button>
-                    </div>
-                </aside>
-            </div>
-        </section>
-
-        <!-- ================= CATAT UANG ================= -->
-        <section id="view-catat" class="view-section" aria-label="Catat Transaksi">
-            <article class="card form-container">
-                <h3>Tambah Catatan Keuangan</h3>
-                <p class="text-muted mb-1">Pilih jenis transaksi dan isi nominalnya dengan mudah.</p>
-                <form id="form-transaksi">
-                    <div class="form-group">
-                        <label class="form-label">1. Pilih Jenis Transaksi</label>
-                        <div class="type-toggle">
-                            <label class="toggle-item"><input type="radio" name="jenis" value="pengeluaran" checked><span class="toggle-box box-out">💸 Pengeluaran (Jajan/Beli)</span></label>
-                            <label class="toggle-item"><input type="radio" name="jenis" value="pemasukan"><span class="toggle-box box-in">💰 Pemasukan (Uang Saku)</span></label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input-nominal" class="form-label">2. Berapa Nominalnya? (Rp)</label>
-                        <input type="number" id="input-nominal" class="form-input input-large" placeholder="Contoh: 10000" min="500" required>
-                        <div class="quick-chips">
-                            <span class="chip-label">Pilih cepat:</span>
-                            <button type="button" class="chip" data-nominal="5000">Rp 5.000</button>
-                            <button type="button" class="chip" data-nominal="10000">Rp 10.000</button>
-                            <button type="button" class="chip" data-nominal="15000">Rp 15.000</button>
-                            <button type="button" class="chip" data-nominal="20000">Rp 20.000</button>
-                            <button type="button" class="chip" data-nominal="50000">Rp 50.000</button>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="input-kategori" class="form-label">3. Kategori</label>
-                            <select id="input-kategori" class="form-input" required>
-                                <option value="Makan & Jajan">🍜 Makan & Jajan Kantin</option>
-                                <option value="Transportasi">🚌 Transport / Ongkos</option>
-                                <option value="Keperluan Sekolah">📚 Tugas & Fotokopi</option>
-                                <option value="Kuota & Hiburan">🎮 Kuota & Hiburan</option>
-                                <option value="Uang Saku">💵 Uang Saku Orang Tua</option>
-                                <option value="Lainnya">📦 Lainnya</option>
+                <div id="filter-panel" class="card filter-panel" hidden>
+                    <div class="filter-grid">
+                        <div class="field-group"><label class="lbl" for="filter-bulan">Bulan</label><select id="filter-bulan" class="input"></select></div>
+                        <div class="field-group"><label class="lbl" for="filter-kategori">Kategori</label><select id="filter-kategori" class="input"></select></div>
+                        <div class="field-group"><label class="lbl" for="filter-urut">Urutkan</label>
+                            <select id="filter-urut" class="input">
+                                <option value="terbaru">Terbaru</option>
+                                <option value="terlama">Terlama</option>
+                                <option value="terbesar">Nominal terbesar</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="input-tanggal" class="form-label">4. Tanggal</label>
-                            <input type="date" id="input-tanggal" class="form-input" required>
-                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="input-keterangan" class="form-label">5. Keterangan Singkat</label>
-                        <input type="text" id="input-keterangan" class="form-input" placeholder="Contoh: Beli nasi ayam di kantin" required>
+                    <div class="filter-actions">
+                        <button type="button" id="btn-reset-filter" class="btn-ghost">Atur ulang filter</button>
+                        <button type="button" id="btn-ekspor" class="btn-small"><svg class="ic"><use href="#i-download"/></svg>Ekspor CSV</button>
+                        <button type="button" id="btn-reset-data" class="btn-danger-outline"><svg class="ic"><use href="#i-trash"/></svg>Hapus Semua Data</button>
                     </div>
-                    <button type="submit" class="btn-submit">Simpan Catatan</button>
-                </form>
-            </article>
-        </section>
-
-        <!-- ================= RIWAYAT ================= -->
-        <section id="view-riwayat" class="view-section" aria-label="Riwayat Data">
-            <article class="card">
-                <div class="section-head">
-                    <div><h3>Semua Riwayat Transaksi</h3><p class="text-muted">Cari atau saring data pemasukan dan pengeluaranmu</p></div>
-                    <button type="button" id="btn-reset-data" class="btn-danger-outline">Hapus Semua Data</button>
                 </div>
-                <div class="filter-bar">
-                    <input type="search" id="search-transaksi" class="form-input" placeholder="Cari transaksi (misal: bakso, angkot)...">
-                    <select id="filter-jenis" class="form-input">
-                        <option value="semua">Semua Jenis Transaksi</option>
-                        <option value="pemasukan">Hanya Pemasukan (Masuk)</option>
-                        <option value="pengeluaran">Hanya Pengeluaran (Keluar)</option>
-                    </select>
-                </div>
-                <div class="table-wrapper">
-                    <table class="data-table">
-                        <thead><tr><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Nominal</th><th>Aksi</th></tr></thead>
-                        <tbody id="tabel-riwayat-body"></tbody>
-                    </table>
-                </div>
-            </article>
-        </section>
 
-        <!-- ================= CELENGAN ================= -->
-        <section id="view-celengan" class="view-section" aria-label="Celengan">
-            <article class="card mb-1">
-                <h3>Buat Target Tabungan Baru</h3>
-                <p class="text-muted mb-1">Punya barang impian? Catat targetmu dan nabung sedikit demi sedikit!</p>
-                <form id="form-celengan" class="goal-form">
-                    <input type="text" id="goal-nama" class="form-input" placeholder="Nama barang (misal: Headset Baru)" required>
-                    <input type="number" id="goal-target" class="form-input" placeholder="Target Harga (Rp)" min="5000" required>
-                    <button type="submit" class="btn-primary-small">+ Tambah Target</button>
-                </form>
-            </article>
-            <div id="list-celengan" class="goals-grid"></div>
-        </section>
+                <div class="tabs" id="tabs-jenis" role="tablist" aria-label="Jenis transaksi">
+                    <button type="button" role="tab" class="tab active" data-jenis="semua" aria-selected="true">Semua</button>
+                    <button type="button" role="tab" class="tab" data-jenis="pemasukan" aria-selected="false">Pemasukan</button>
+                    <button type="button" role="tab" class="tab" data-jenis="pengeluaran" aria-selected="false">Pengeluaran</button>
+                </div>
 
-        <footer class="app-footer"><p>&copy; 2026 <strong>SakuKu</strong> — Muhammad Fathan Ali Khalifah.</p></footer>
-    </main>
+                <article class="card list-card">
+                    <ul id="list-riwayat" class="tx-list"></ul>
+                </article>
+            </section>
+
+            <!-- ===================== CELENGAN ===================== -->
+            <section id="view-celengan" class="view" aria-label="Celengan">
+                <div id="celengan-isi"></div>
+            </section>
+
+            <footer class="app-footer"><p>&copy; 2026 <strong>SakuKu</strong> &mdash; Muhammad Fathan Ali Khalifah. Data tersimpan otomatis di perangkatmu.</p></footer>
+        </main>
+    </div>
 </div>
 
-<div id="toast" class="toast" aria-live="polite">Berhasil disimpan!</div>
+<!-- ===================== NAVIGASI BAWAH (HP) ===================== -->
+<nav class="bottom-nav" aria-label="Menu utama (HP)">
+    <a class="bn-link" href="#beranda" data-view="beranda"><svg class="ic"><use href="#i-home"/></svg><span>Beranda</span></a>
+    <a class="bn-link" href="#catat" data-view="catat"><svg class="ic"><use href="#i-plus"/></svg><span>Catat Uang</span></a>
+    <a class="bn-link" href="#riwayat" data-view="riwayat"><svg class="ic"><use href="#i-clock"/></svg><span>Riwayat</span></a>
+    <a class="bn-link" href="#celengan" data-view="celengan"><svg class="ic"><use href="#i-piggy"/></svg><span>Celengan</span></a>
+</nav>
+
+<dialog id="modal" aria-labelledby="modal-judul"></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-text"></span><button type="button" id="toast-aksi" hidden></button></div>
+
 <script src="script.js"></script>
 </body>
 </html>
