@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SAKUKU - LOGIKA APLIKASI
+ * FANFINANCE - LOGIKA APLIKASI
  * Navigasi (hash), saldo & batas harian, grafik mingguan, catat uang,
  * riwayat (cari/filter/urut/ekspor), celengan, notifikasi, dan LocalStorage.
  * Data lama (sakuku_transaksi, sakuku_celengan, sakuku_limit) tetap terbaca.
@@ -168,7 +168,7 @@ function renderJudul() {
     const h = HALAMAN[halamanAktif];
     $('#page-title').textContent = h.judul();
     $('#page-sub').textContent = h.sub;
-    document.title = (halamanAktif === 'beranda' ? 'FanFinance' : h.judul() + ' - FanFinance') + ' | Catatan Keuangan';
+    document.title = (halamanAktif === 'beranda' ? 'FanFinance' : h.judul() + ' - FanFinance') + '';
 }
 function pindahHalaman(nama) {
     if (location.hash === '#' + nama) tampilkanHalaman();
@@ -534,7 +534,7 @@ function eksporCSV() {
     const blob = new Blob(['\ufeff' + baris.join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `sakuku-${tanggalLokal()}.csv`;
+    a.download = `fanfinance-${tanggalLokal()}.csv`;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -904,3 +904,28 @@ renderGridKategori();
 renderTips();
 perbaruiTampilan();
 tampilkanHalaman();
+
+// ===== Splash screen: muncul setiap buka / refresh, hilang setelah halaman siap =====
+(function () {
+    const splash = document.getElementById('splash-screen');
+    if (!splash) return;
+    const MIN_TAMPIL = 1200;   // ms - minimal splash terlihat supaya animasinya sempat kelihatan
+    const MAKS_TUNGGU = 4000;  // ms - jaga-jaga kalau 'load' lama / macet
+    const mulai = performance.now();
+    let selesai = false;
+
+    function sembunyikan() {
+        if (selesai) return;
+        selesai = true;
+        splash.classList.add('splash-hidden');
+        setTimeout(() => splash.remove(), 700);
+    }
+    function jadwalkan() {
+        const sisa = Math.max(0, MIN_TAMPIL - (performance.now() - mulai));
+        setTimeout(sembunyikan, sisa);
+    }
+
+    if (document.readyState === 'complete') jadwalkan();
+    else window.addEventListener('load', jadwalkan);
+    setTimeout(sembunyikan, MAKS_TUNGGU);
+})();

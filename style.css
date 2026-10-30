@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SAKUKU - Tema dashboard baru (Fixed Desktop Sidebar + Mobile Responsive)
+   FANFINANCE - Tema dashboard baru (Fixed Desktop Sidebar + Mobile Responsive)
    Sidebar navy, kartu biru, latar terang kebiruan.
    Responsif: desktop (sidebar penuh) > tablet (sidebar ikon) > HP (menu bawah)
    ========================================================================== */
@@ -626,3 +626,28 @@ dialog#modal::backdrop { background: rgba(7, 18, 56, .55); backdrop-filter: blur
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* =========================================
+   LOGO SIDEBAR KIRI ATAS
+   ========================================= */
+.brand-logo-img { width: 48px; height: 48px; object-fit: contain; flex-shrink: 0; display: block; }
+
+/* =========================================
+   ANIMASI LOADING (SPLASH SCREEN)
+   ========================================= */
+.splash-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    background: linear-gradient(180deg, #0d2160 0%, #081338 100%);
+    transition: opacity .6s ease, visibility .6s ease;
+}
+.splash-content { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.splash-logo { width: 96px; height: 96px; object-fit: contain; animation: splash-pulse 1.5s infinite ease-in-out; }
+.splash-text { color: #fff; font-size: 1.8rem; font-weight: 800; letter-spacing: -.3px; margin: 0; animation: splash-fade .8s ease both; }
+.splash-bar { width: 140px; height: 5px; border-radius: 99px; background: rgba(255,255,255,.15); overflow: hidden; margin-top: 8px; }
+.splash-bar i { display: block; height: 100%; width: 40%; border-radius: 99px; background: #5ea0ff; animation: splash-load 1.1s infinite ease-in-out; }
+.splash-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+@keyframes splash-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: .85; } }
+@keyframes splash-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes splash-load { 0% { transform: translateX(-110%); } 100% { transform: translateX(350%); } }
