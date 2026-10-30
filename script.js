@@ -168,7 +168,7 @@ function renderJudul() {
     const h = HALAMAN[halamanAktif];
     $('#page-title').textContent = h.judul();
     $('#page-sub').textContent = h.sub;
-    document.title = (halamanAktif === 'beranda' ? 'SakuKu' : h.judul() + ' - SakuKu') + ' | Catatan Keuangan Siswa PPLG';
+    document.title = (halamanAktif === 'beranda' ? 'FanFinance' : h.judul() + ' - FanFinance') + ' | Catatan Keuangan';
 }
 function pindahHalaman(nama) {
     if (location.hash === '#' + nama) tampilkanHalaman();
